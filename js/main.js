@@ -38,8 +38,13 @@ function saveQuestionsToStorage() {
 function loadQuizState() {
     const savedIndex = localStorage.getItem("quizCurrentQuestion");
     const savedScore = localStorage.getItem("quizScore");
-    if (savedIndex !== null) currentQuestion = Number(savedIndex);
-    if (savedScore !== null) score = Number(savedScore);
+
+    //to avoid our currenQuestion and score being strings
+
+    // if (savedIndex !== null) currentQuestion = Number(savedIndex);
+    // if (savedScore !== null) score = Number(savedScore);
+    currentQuestion = Number(localStorage.getItem("quizCurrentQuestion")) || 0;
+    score = Number(localStorage.getItem("quizScore")) || 0;
 }
 
 // Save state to localStorage
@@ -56,7 +61,7 @@ async function fetchQuestions() {
     }
     try {
         const res = await fetch(
-            "https://opentdb.com/api.php?amount=5&category=18&type=multiple"
+            "https://opentdb.com/api.php?amount=10&category=18&type=multiple"
         );
         const data = await res.json();
 
@@ -86,7 +91,7 @@ function startQuiz() {
 }
 
 nextBtn.addEventListener("click", () => {
-    currentQuestion++;
+    currentQuestion;
     saveQuizState();
     if (currentQuestion < questions.length) loadQuestion();
     else showResult();
