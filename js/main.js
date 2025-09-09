@@ -1,20 +1,17 @@
 "use strict";
 
-// document elements
+// DOM elements
+const startBtn = document.getElementById("start-btn");
+const welcomeScreen = document.querySelector(".welcome-screen");
+const quizScreen = document.querySelector(".quiz-screen");
 const questionElement = document.getElementById("question");
 const optionsElement = document.getElementById("options");
 const nextBtn = document.getElementById("next-btn");
-const resultElement = document.getElementById("result");
-const progressBar = document.getElementById("progress-bar");
-const questionNumber = document.getElementById("question-number");
 const timerElement = document.getElementById("timer-text");
-const startBtn = document.getElementById("start-btn");
-
-const quizScreen = document.querySelector(".quiz-screen");
-const welcomeScreen = document.querySelector(".welcome-screen");
 const resultScreen = document.getElementById("result");
+const resultElement = document.getElementById("result");
 
-// global state
+// Quiz state
 let questions = [];
 let currentQuestion = 0;
 let score = 0;
@@ -22,63 +19,47 @@ let timer;
 let timeLeft;
 let answered = false;
 
-// restart quiz
-function restartQuiz() {
-    welcomeScreen.classList.add("active");
+// Fetch questions from API and start quiz
+async function fetchQuestions() {
+    try {
+        const res = await fetch(
+            "https://opentdb.com/api.php?amount=5&category=18&type=multiple"
+        );
+        const data = await res.json();
+
+        questions = data.results.map((q) => {
+            const options = [...q.incorrect_answers];
+            const correctIndex = Math.floor(Math.random() * (options.length + 1));
+            options.splice(correctIndex, 0, q.correct_answer);
+
+            return { question: q.question, options, correct: correctIndex };
+        });
+
+        startQuiz();
+    } catch (err) {
+        console.error("Failed to fetch questions:", err);
+        questionElement.textContent = "Could not load questions. Try again later.";
+    }
+}
+
+function startQuiz() {
+    welcomeScreen.classList.remove("active");
+    quizScreen.classList.add("active");
     resultScreen.classList.remove("active");
-
-    // clean buttons
-    nextBtn.style.display = "none";
-    const oldResultBtn = document.querySelector(".result-btn");
-    if (oldResultBtn) oldResultBtn.remove();
-
-    questions = [];
     currentQuestion = 0;
     score = 0;
-
-    localStorage.removeItem("quizState"); // clear save
+    loadQuestion();
+    updateProgress();
 }
 
-// update progress
-function updateProgress() {
-    if (questions.length > 0) {
-        const progress = ((currentQuestion + 1) / questions.length) * 100;
-        progressBar.style.width = progress + "%";
-        questionNumber.textContent = `${currentQuestion + 1} / ${questions.length}`;
-    } else {
-        progressBar.style.width = "0%";
-        questionNumber.textContent = "0 / 0";
-    }
+function restartQuiz() {
+    resultScreen.classList.remove("active");
+    welcomeScreen.classList.add("active");
 }
 
-// start button
-startBtn.addEventListener("pointerup", fetchQuestions);
-startBtn.addEventListener("click", fetchQuestions); // desktop fallback
-
-// save quiz state
 function saveQuizState() {
-    const state = {
-        currentQuestion,
-        score,
-        timeLeft,
-        questions,
-    };
-    localStorage.setItem("quizState", JSON.stringify(state));
+    // Optional: implement saving logic if needed
 }
 
-// restore state if available
-window.addEventListener("load", () => {
-    const savedState = localStorage.getItem("quizState");
-    if (savedState) {
-        const state = JSON.parse(savedState);
-        questions = state.questions;
-        currentQuestion = state.currentQuestion;
-        score = state.score;
-        timeLeft = state.timeLeft;
+startBtn.addEventListener("click", fetchQuestions);
 
-        welcomeScreen.classList.remove("active");
-        quizScreen.classList.add("active");
-
-        loadQuestion();
-    }
-});
