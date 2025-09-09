@@ -8,6 +8,10 @@ function loadQuestion() {
     timer = setInterval(countdown, 1000);
 
     let q = questions[currentQuestion];
+    if (!q) {
+        questionElement.textContent = "No question found!";
+        return;
+    }
     questionElement.innerHTML = `Q${currentQuestion + 1}. ${q.question}`;
 
     optionsElement.innerHTML = "";
@@ -46,7 +50,6 @@ function countdown() {
 
 function updateTimer() {
     timerElement.textContent = `⏰ ${timeLeft} seconds`;
-    saveQuizState();
 }
 
 function updateProgress() {
