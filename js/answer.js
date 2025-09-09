@@ -1,7 +1,6 @@
 "use strict";
 
 function selectAnswer(index, shouldScore) {
-    saveQuizState();
     if (answered) return;
     answered = true;
 
