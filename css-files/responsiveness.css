@@ -1,0 +1,146 @@
+@media (max-width: 1024px) {
+    .quiz-header h1 {
+        font-size: 2rem;
+    }
+
+    #question-number {
+        width: 70px;
+        height: 70px;
+        font-size: 20px;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+}
+
+/* Mobile large (big phones, < 768px) */
+@media (max-width: 768px) {
+    .quiz-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .quiz-header p {
+        font-size: 0.9rem;
+    }
+
+    .quiz-contanier {
+        padding: 15px;
+    }
+
+    #question {
+        font-size: 1rem;
+    }
+
+    .option-btn {
+        font-size: 0.95rem;
+        padding: 10px;
+    }
+
+    #next-btn,
+    #restart-btn,
+    .result-btn {
+        width: 100%;
+        font-size: 1rem;
+        padding: 12px;
+    }
+}
+
+/* Mobile small (all phones < 480px) */
+@media (max-width: 480px) {
+
+    .quiz-header h1 {
+        font-size: 1.4rem;
+    }
+
+    .quiz-header p {
+        font-size: 0.75rem;
+    }
+
+    h2 {
+        font-size: 1.1rem;
+    }
+
+    #question {
+        font-size: 0.9rem;
+    }
+
+    #question-number {
+        width: 60px;
+        height: 60px;
+        font-size: 18px;
+    }
+
+    .option-btn {
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+
+    #next-btn,
+    #restart-btn,
+    .result-btn {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    p {
+        font-size: 0.8rem;
+    }
+}
+
+/* Small screens (380px) */
+@media(max-width: 380px) {
+    body {
+        padding: 3%;
+    }
+
+    .quiz-box {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .quiz-contanier {
+        /* max-width: 100%;
+        min-width: 100%; */
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .quiz-header h1 {
+        font-size: 20px;
+    }
+
+    .quiz-header p {
+        font-size: 14px;
+    }
+
+    #question {
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+    .options button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    #next-btn,
+    #start-btn,
+    .result-btn,
+    #restart-btn {
+        width: 100%;
+        font-size: 14px;
+        padding: 10px;
+    }
+
+
+
+    #question-number {
+        font-size: 13px;
+    }
+
+    #timer {
+        font-size: 13px;
+        text-align: center;
+    }
+}
