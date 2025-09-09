@@ -23,7 +23,9 @@ function loadQuestion() {
         const btn = document.createElement("button");
         btn.classList.add("option-btn");
         btn.innerHTML = option;
+        // Add both click and pointerup for mobile support
         btn.addEventListener("click", () => selectAnswer(index, true));
+        btn.addEventListener("pointerup", () => selectAnswer(index, true));
         optionsElement.appendChild(btn);
     });
 
